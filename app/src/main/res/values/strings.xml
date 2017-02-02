@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Mapping</string>
+    <string name="lat">Latitude</string>
+    <string name="lon">Longitude</string>
+    <string name="btn">Locate</string>
+
 </resources>
