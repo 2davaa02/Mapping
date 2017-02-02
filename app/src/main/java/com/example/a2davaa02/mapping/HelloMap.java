@@ -27,6 +27,6 @@ public class HelloMap extends Activity
 
         mv.setBuiltInZoomControls(true);
         mv.getController().setZoom(14);
-        mv.getController().setCenter(new GeoPoint(51.05,-0.72));
+        mv.getController().setCenter(new GeoPoint(40.1,22.5));
     }
 }
