@@ -33,7 +33,7 @@ public class MapChooseActivity extends Activity implements View.OnClickListener 
         Intent intent = new Intent();
         Bundle bundle=new Bundle();
 
-        bundle.putBoolean("cyclemap",cyclemap);
+        bundle.putBoolean("com.example.cyclemap",cyclemap);
         intent.putExtras(bundle);
         setResult(RESULT_OK,intent);
         finish();

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 
 public class HelloMap extends Activity implements View.OnClickListener
 
@@ -55,7 +56,7 @@ public class HelloMap extends Activity implements View.OnClickListener
         {
 
             Intent intent = new Intent(this,MapChooseActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent,0);
             //code
             return true;
         }
@@ -82,4 +83,27 @@ public class HelloMap extends Activity implements View.OnClickListener
             mv.getController().setCenter(new GeoPoint(la, lo));
         }
     }
+
+    protected void onActivityResult(int requestCode,int resultCode,Intent intent)
+    {
+
+        if(requestCode==0)
+        {
+
+            if (resultCode==RESULT_OK)
+            {
+                Bundle extras=intent.getExtras();
+                boolean cyclemap = extras.getBoolean("com.example.cyclemap");
+                if(cyclemap==true)
+                {
+                    mv.setTileSource(TileSourceFactory.CYCLEMAP);
+                }
+                else
+                {
+                    mv.getTileProvider().setTileSource(TileSourceFactory.MAPNIK);
+                }
+            }
+        }
+    }
+
 }
