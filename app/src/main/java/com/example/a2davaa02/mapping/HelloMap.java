@@ -15,11 +15,13 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 
-public class HelloMap extends Activity implements View.OnClickListener
+public class HelloMap extends Activity
 
 {
 
     MapView mv;
+    double defalutLongitude=40.1;
+    double defalutLatitude=22.5;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -37,10 +39,9 @@ public class HelloMap extends Activity implements View.OnClickListener
 
         mv.setBuiltInZoomControls(true);
         mv.getController().setZoom(14);
-        mv.getController().setCenter(new GeoPoint(40.1,22.5));
+        mv.getController().setCenter(new GeoPoint(defalutLongitude,defalutLatitude));
 
-        Button btn   = (Button)findViewById(R.id.searchLocation);
-        btn.setOnClickListener(this);
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu)
@@ -60,10 +61,17 @@ public class HelloMap extends Activity implements View.OnClickListener
             //code
             return true;
         }
+        else if(item.getItemId()==R.id.setLocation)
+        {
+            Intent intent = new Intent(this,SetMapLocation.class);
+            startActivityForResult(intent,1);
+            //code
+            return true;
+        }
         return false;
     }
 
-
+/*
     @Override
     public void onClick(View view) {
         EditText lat = (EditText)findViewById(R.id.latitude);
@@ -72,17 +80,17 @@ public class HelloMap extends Activity implements View.OnClickListener
         if(lat.getText().toString().equals("")||lon.getText().toString().equals(""))
         {
             mv.getController().setZoom(7);
-            mv.getController().setCenter(new GeoPoint(0.0,0.0));
+            mv.getController().setCenter(new GeoPoint(defalutLongitude,defalutLatitude));
         }
         else
         {
             Float la = Float.parseFloat(lat.getText().toString());
             Float lo = Float.parseFloat(lon.getText().toString());
 
-            mv.getController().setZoom(2);
+            mv.getController().setZoom(10);
             mv.getController().setCenter(new GeoPoint(la, lo));
         }
-    }
+    }*/
 
     protected void onActivityResult(int requestCode,int resultCode,Intent intent)
     {
@@ -94,7 +102,7 @@ public class HelloMap extends Activity implements View.OnClickListener
             {
                 Bundle extras=intent.getExtras();
                 boolean cyclemap = extras.getBoolean("com.example.cyclemap");
-                if(cyclemap==true)
+                if(cyclemap)
                 {
                     mv.setTileSource(TileSourceFactory.CYCLEMAP);
                 }
@@ -102,6 +110,17 @@ public class HelloMap extends Activity implements View.OnClickListener
                 {
                     mv.getTileProvider().setTileSource(TileSourceFactory.MAPNIK);
                 }
+            }
+        }
+        else if(requestCode==1)
+        {
+            if (resultCode==RESULT_OK)
+            {
+                Bundle extras=intent.getExtras();
+                double []coordinates= extras.getDoubleArray("com.example.setlocation");
+
+                mv.getController().setZoom(10);
+                mv.getController().setCenter(new GeoPoint(coordinates[0], coordinates[1]));
             }
         }
     }

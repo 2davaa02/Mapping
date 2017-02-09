@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/lattxt"
+            android:text="@string/lat"
+            style="@style/SearchBoxText"
+            />
+        <EditText
+            android:id="@+id/latitude"
+            style="@style/SearchBoxEdit"
+            />
+        <TextView
+            android:id="@+id/lontxt"
+            android:text="@string/lon"
+            style="@style/SearchBoxText"
+            />
+        <EditText
+            android:id="@+id/longitude"
+            style="@style/SearchBoxEdit"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/searchLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn"/>
+
+</LinearLayout>
