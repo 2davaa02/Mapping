@@ -3,5 +3,8 @@
     <string name="lat">Latitude</string>
     <string name="lon">Longitude</string>
     <string name="btn">Locate</string>
+    <string name="choosemap">Choose map</string>
+    <string name="regularview">Regular View</string>
+    <string name="cyclemapview">Cycle View</string>
 
 </resources>

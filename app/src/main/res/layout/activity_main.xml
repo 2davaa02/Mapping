@@ -10,8 +10,8 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:text="@string/lat"
             android:id="@+id/lattxt"
+            android:text="@string/lat"
             style="@style/SearchBoxText"
             />
         <EditText
@@ -19,8 +19,8 @@
             style="@style/SearchBoxEdit"
             />
         <TextView
-            android:text="@string/lon"
             android:id="@+id/lontxt"
+            android:text="@string/lon"
             style="@style/SearchBoxText"
             />
         <EditText
@@ -30,17 +30,17 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/searchLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchLocation"
         android:text="@string/btn"/>
 
     <org.osmdroid.views.MapView
+        android:id="@+id/map1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:enabled="true"
         android:clickable="true"
-        android:id="@+id/map1"
         tilesource="Mapnik"
         />
 </LinearLayout>

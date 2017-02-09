@@ -1,8 +1,12 @@
 package com.example.a2davaa02.mapping;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +42,26 @@ public class HelloMap extends Activity implements View.OnClickListener
         btn.setOnClickListener(this);
     }
 
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu_hello_map,menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if(item.getItemId()==R.id.choosemap)
+        {
+
+            Intent intent = new Intent(this,MapChooseActivity.class);
+            startActivity(intent);
+            //code
+            return true;
+        }
+        return false;
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -46,7 +70,7 @@ public class HelloMap extends Activity implements View.OnClickListener
 
         if(lat.getText().toString().equals("")||lon.getText().toString().equals(""))
         {
-            mv.getController().setZoom(14);
+            mv.getController().setZoom(7);
             mv.getController().setCenter(new GeoPoint(0.0,0.0));
         }
         else
@@ -54,7 +78,7 @@ public class HelloMap extends Activity implements View.OnClickListener
             Float la = Float.parseFloat(lat.getText().toString());
             Float lo = Float.parseFloat(lon.getText().toString());
 
-            mv.getController().setZoom(14);
+            mv.getController().setZoom(2);
             mv.getController().setCenter(new GeoPoint(la, lo));
         }
     }
