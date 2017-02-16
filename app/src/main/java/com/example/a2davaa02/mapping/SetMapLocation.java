@@ -37,11 +37,12 @@ public class SetMapLocation extends Activity implements View.OnClickListener{
             lo = Double.parseDouble(lon.getText().toString());
         }
 
-        double[] coordinates= {la,lo};
         Intent intent = new Intent();
         Bundle bundle=new Bundle();
 
-        bundle.putDoubleArray("com.example.setlocation",coordinates);
+        bundle.putDouble("com.example.setlat",la);
+        bundle.putDouble("com.example.setlon",lo);
+
         intent.putExtras(bundle);
         setResult(RESULT_OK,intent);
         finish();

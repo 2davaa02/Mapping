@@ -53,44 +53,22 @@ public class HelloMap extends Activity
 
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if(item.getItemId()==R.id.choosemap)
+        if(item.getItemId()==R.id.choosemapstylelist)
         {
-
-            Intent intent = new Intent(this,MapChooseActivity.class);
+            Intent intent = new Intent(this,ExampleListActivity.class);
             startActivityForResult(intent,0);
-            //code
+
             return true;
         }
         else if(item.getItemId()==R.id.setLocation)
         {
             Intent intent = new Intent(this,SetMapLocation.class);
             startActivityForResult(intent,1);
-            //code
+
             return true;
         }
         return false;
     }
-
-/*
-    @Override
-    public void onClick(View view) {
-        EditText lat = (EditText)findViewById(R.id.latitude);
-        EditText lon = (EditText)findViewById(R.id.longitude);
-
-        if(lat.getText().toString().equals("")||lon.getText().toString().equals(""))
-        {
-            mv.getController().setZoom(7);
-            mv.getController().setCenter(new GeoPoint(defalutLongitude,defalutLatitude));
-        }
-        else
-        {
-            Float la = Float.parseFloat(lat.getText().toString());
-            Float lo = Float.parseFloat(lon.getText().toString());
-
-            mv.getController().setZoom(10);
-            mv.getController().setCenter(new GeoPoint(la, lo));
-        }
-    }*/
 
     protected void onActivityResult(int requestCode,int resultCode,Intent intent)
     {
@@ -117,10 +95,11 @@ public class HelloMap extends Activity
             if (resultCode==RESULT_OK)
             {
                 Bundle extras=intent.getExtras();
-                double []coordinates= extras.getDoubleArray("com.example.setlocation");
+                double lat= extras.getDouble("com.example.setlat");
+                double lon= extras.getDouble("com.example.setlon");
 
                 mv.getController().setZoom(10);
-                mv.getController().setCenter(new GeoPoint(coordinates[0], coordinates[1]));
+                mv.getController().setCenter(new GeoPoint(lat, lon));
             }
         }
     }
