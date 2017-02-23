@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.a2davaa02.mapping">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -23,13 +22,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ExampleListActivity" android:label="@string/choosemap">
-        </activity>
-
-        <activity android:name=".SetMapLocation" android:label="@string/setLocation">
-        </activity>
-
+        <activity
+            android:name=".ExampleListActivity"
+            android:label="@string/choosemap"></activity>
+        <activity
+            android:name=".SetMapLocation"
+            android:label="@string/setLocation"></activity>
+        <activity
+            android:name=".MyPrefereceActivity"
+            android:label="@string/title_activity_my_preferece"></activity>
     </application>
 
 </manifest>

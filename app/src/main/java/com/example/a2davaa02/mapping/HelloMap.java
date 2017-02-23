@@ -2,6 +2,7 @@ package com.example.a2davaa02.mapping;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -20,8 +21,6 @@ public class HelloMap extends Activity
 {
 
     MapView mv;
-    double defalutLongitude=40.1;
-    double defalutLatitude=22.5;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -36,12 +35,21 @@ public class HelloMap extends Activity
                 (this, PreferenceManager.getDefaultSharedPreferences(this));
 
         mv = (MapView)findViewById(R.id.map1);
-
         mv.setBuiltInZoomControls(true);
-        mv.getController().setZoom(14);
-        mv.getController().setCenter(new GeoPoint(defalutLongitude,defalutLatitude));
 
 
+    }
+
+    public void onStart()
+    {
+        super.onStart();
+        SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        double lat=Double.parseDouble(pref.getString("lat","22.5"));
+        double lon=Double.parseDouble(pref.getString("lon","40.1"));
+        int zoom=Integer.parseInt(pref.getString("zoom","12"));
+
+        mv.getController().setZoom(zoom);
+        mv.getController().setCenter(new GeoPoint(lon,lat));
     }
 
     public boolean onCreateOptionsMenu(Menu menu)
@@ -66,6 +74,11 @@ public class HelloMap extends Activity
             startActivityForResult(intent,1);
 
             return true;
+        }
+        else if(item.getItemId()==R.id.Preferences)
+        {
+            Intent intent=new Intent(this,MyPrefereceActivity.class);
+            startActivityForResult(intent,2);
         }
         return false;
     }
@@ -102,6 +115,7 @@ public class HelloMap extends Activity
                 mv.getController().setCenter(new GeoPoint(lat, lon));
             }
         }
+
     }
 
 }
