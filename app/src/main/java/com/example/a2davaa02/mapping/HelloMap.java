@@ -86,7 +86,7 @@ public class HelloMap extends Activity
                 }
                 else
                 {
-                    mv.getTileProvider().setTileSource(TileSourceFactory.MAPNIK);
+                    mv.setTileSource(TileSourceFactory.MAPNIK);
                 }
             }
         }
