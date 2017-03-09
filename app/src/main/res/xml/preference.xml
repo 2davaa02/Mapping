@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <EditTextPreference android:key="lat" android:defaultValue="22.5" android:title="Latitude" android:summary="Default latitude"/>
-    <EditTextPreference android:key="lon" android:defaultValue="40.1" android:title="Longitude" android:summary="Default longitude"/>
-    <EditTextPreference android:key="zoom" android:defaultValue="12" android:title="Zoom Level" android:summary="Default zoom level for the map"/>
-    <ListPreference android:key="style" android:title="Map Style" android:summary="Default Map style" android:entries="@array/map" android:entryValues="@array/mapCode"/>
+    <EditTextPreference
+        android:key="lat"
+        android:defaultValue="22.5"
+        android:title="@string/lat"
+        android:summary="Default latitude"/>
+    <EditTextPreference
+        android:key="lon"
+        android:defaultValue="40.1"
+        android:title="@string/lon"
+        android:summary="Default longitude"/>
+    <EditTextPreference
+        android:key="zoom"
+        android:defaultValue="12"
+        android:title="@string/zoom"
+        android:summary="Default zoom level for the map"/>
+    <ListPreference
+        android:key="style"
+        android:title="@string/listTitle"
+        android:summary="Default Map style"
+        android:entries="@array/map"
+        android:entryValues="@array/mapCode"/>
 </PreferenceScreen>

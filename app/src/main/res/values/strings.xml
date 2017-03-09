@@ -7,8 +7,9 @@
     <string name="regularview">Regular View</string>
     <string name="cyclemapview">Cycle View</string>
     <string name="setLocation">Set Location</string>
-    <string name="listTitle">Choose Map Style(List)</string>
+    <string name="listTitle">Map Style</string>
     <string name="title_activity_my_preferece">MyPrefereceActivity</string>
     <string name="preference">Preference</string>
+    <string name="zoom">Zoom Level</string>
 
 </resources>

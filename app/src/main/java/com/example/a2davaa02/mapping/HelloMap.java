@@ -21,6 +21,7 @@ public class HelloMap extends Activity
 {
 
     MapView mv;
+    boolean returned = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -40,16 +41,25 @@ public class HelloMap extends Activity
 
     }
 
-    public void onStart()
+    public void onResume()
     {
-        super.onStart();
-        SharedPreferences pref=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        double lat=Double.parseDouble(pref.getString("lat","22.5"));
-        double lon=Double.parseDouble(pref.getString("lon","40.1"));
-        int zoom=Integer.parseInt(pref.getString("zoom","12"));
 
-        mv.getController().setZoom(zoom);
-        mv.getController().setCenter(new GeoPoint(lon,lat));
+        super.onResume();
+        if(returned==false) {
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            double lat = Double.parseDouble(pref.getString("lat", "22.5"));
+            double lon = Double.parseDouble(pref.getString("lon", "40.1"));
+            int zoom = Integer.parseInt(pref.getString("zoom", "12"));
+
+            mv.getController().setZoom(zoom);
+            mv.getController().setCenter(new GeoPoint(lon, lat));
+
+            if (pref.getString("style", "R").equals("R")) {
+                mv.setTileSource(TileSourceFactory.MAPNIK);
+            } else {
+                mv.setTileSource(TileSourceFactory.CYCLEMAP);
+            }
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu)
@@ -61,6 +71,7 @@ public class HelloMap extends Activity
 
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        returned = false;
         if(item.getItemId()==R.id.choosemapstylelist)
         {
             Intent intent = new Intent(this,ExampleListActivity.class);
@@ -101,7 +112,9 @@ public class HelloMap extends Activity
                 {
                     mv.setTileSource(TileSourceFactory.MAPNIK);
                 }
+
             }
+            returned = true;
         }
         else if(requestCode==1)
         {
@@ -113,7 +126,9 @@ public class HelloMap extends Activity
 
                 mv.getController().setZoom(10);
                 mv.getController().setCenter(new GeoPoint(lat, lon));
+
             }
+            returned = true;
         }
 
     }
