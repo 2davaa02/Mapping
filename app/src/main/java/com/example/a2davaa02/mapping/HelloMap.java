@@ -3,18 +3,33 @@ package com.example.a2davaa02.mapping;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.OverlayItem;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 
 public class HelloMap extends Activity
 
@@ -22,6 +37,94 @@ public class HelloMap extends Activity
 
     MapView mv;
     boolean returned = false;
+    ItemizedIconOverlay<OverlayItem> items;
+    ItemizedIconOverlay.OnItemGestureListener<OverlayItem> markerGestureListener;
+    ItemizedIconOverlay<OverlayItem> error;
+
+    class MyTask extends AsyncTask<Void,Void,ItemizedIconOverlay<OverlayItem>>
+    {
+        public ItemizedIconOverlay<OverlayItem> doInBackground(Void... unused)
+        {
+            HttpURLConnection conn = null;
+            try
+            {
+                URL url = new URL("http://www.free-map.org.uk/course/mad/poi.txt");
+                conn = (HttpURLConnection) url.openConnection();
+                InputStream in = conn.getInputStream();
+
+                if(conn.getResponseCode() == 200)
+                {
+                    markerGestureListener = new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>()
+                    {
+                        public boolean onItemLongPress(int i, OverlayItem item)
+                        {
+                            Toast title=Toast.makeText(HelloMap.this,item.getTitle(),Toast.LENGTH_SHORT);
+                            title.setGravity(Gravity.CENTER,0,0);
+                            title.show();
+
+                            Toast.makeText(HelloMap.this, item.getSnippet(), Toast.LENGTH_SHORT).show();
+                            return true;
+
+                        }
+
+                        public boolean onItemSingleTapUp(int i, OverlayItem item)
+                        {
+                            Toast title=Toast.makeText(HelloMap.this,item.getTitle(),Toast.LENGTH_SHORT);
+                            title.setGravity(Gravity.CENTER,0,0);
+                            title.show();
+
+                            Toast.makeText(HelloMap.this, item.getSnippet(), Toast.LENGTH_SHORT).show();
+                            return true;
+                        }
+                    };
+
+                    items=new ItemizedIconOverlay<OverlayItem>(HelloMap.this,new ArrayList<OverlayItem>(),markerGestureListener);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+                    String line;
+                    while((line = reader.readLine()) != null)
+                    {
+                        String[] components = line.split(",");
+                        if(components.length==5)
+                        {
+                            OverlayItem item=new OverlayItem(components[0],components[2],new GeoPoint(Double.parseDouble(components[4]),Double.parseDouble(components[3])));
+                            if(components[1].equals("pub"))
+                            {
+                                item.setMarker(getResources().getDrawable(R.drawable.pub));
+                            }
+                            else if(components[1].equals("restaurant"))
+                            {
+                                item.setMarker(getResources().getDrawable(R.drawable.restaurant));
+
+                            }
+                            items.addItem(item);
+                        }
+                    }
+
+                    return items;
+                }
+                else
+                    return error;
+
+
+            }
+            catch(IOException e)
+            {
+                return error;
+            }
+            finally
+            {
+                if(conn!=null)
+                    conn.disconnect();
+            }
+        }
+
+        public void onPostExecute(ItemizedIconOverlay<OverlayItem> items)
+        {
+            mv.getOverlays().add(items);
+        }
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -38,6 +141,8 @@ public class HelloMap extends Activity
         mv = (MapView)findViewById(R.id.map1);
         mv.setBuiltInZoomControls(true);
 
+        MyTask t=new MyTask();
+        t.execute();
 
     }
 
@@ -47,12 +152,12 @@ public class HelloMap extends Activity
         super.onResume();
         if(returned==false) {
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            double lat = Double.parseDouble(pref.getString("lat", "22.5"));
-            double lon = Double.parseDouble(pref.getString("lon", "40.1"));
-            int zoom = Integer.parseInt(pref.getString("zoom", "12"));
+            double lat = Double.parseDouble(pref.getString("lat", "47.1666"));
+            double lon = Double.parseDouble(pref.getString("lon", "27.5787"));
+            int zoom = Integer.parseInt(pref.getString("zoom", "14"));
 
             mv.getController().setZoom(zoom);
-            mv.getController().setCenter(new GeoPoint(lon, lat));
+            mv.getController().setCenter(new GeoPoint(lat, lon));
 
             if (pref.getString("style", "R").equals("R")) {
                 mv.setTileSource(TileSourceFactory.MAPNIK);

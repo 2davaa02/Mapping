@@ -12,8 +12,8 @@ import android.widget.EditText;
  */
 public class SetMapLocation extends Activity implements View.OnClickListener{
 
-    double defalutLongitude=40.1;
-    double defalutLatitude=22.5;
+    double defalutLongitude=27.578;
+    double defalutLatitude=47.166;
 
     public void onCreate(Bundle savedInstancesState)
     {

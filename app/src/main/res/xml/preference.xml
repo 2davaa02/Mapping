@@ -2,17 +2,17 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <EditTextPreference
         android:key="lat"
-        android:defaultValue="22.5"
+        android:defaultValue="47.1668"
         android:title="@string/lat"
         android:summary="Default latitude"/>
     <EditTextPreference
         android:key="lon"
-        android:defaultValue="40.1"
+        android:defaultValue="27.5779"
         android:title="@string/lon"
         android:summary="Default longitude"/>
     <EditTextPreference
         android:key="zoom"
-        android:defaultValue="12"
+        android:defaultValue="14"
         android:title="@string/zoom"
         android:summary="Default zoom level for the map"/>
     <ListPreference
