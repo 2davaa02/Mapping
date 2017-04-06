@@ -13,7 +13,7 @@
     </style>
 
     <style name="SearchBoxEdit" parent="SearchBoxText">
-        <item name="android:inputType">numberDecimal</item>
+        <item name="android:inputType">numberSigned</item>
     </style>
 
 
